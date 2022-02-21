@@ -29,12 +29,14 @@ public class HttpServletPesponse {
         //3.1发送状态行
         String line = "HTTP/1.1"+" "+statusCode+" "+statusReason;
         println(line);
+        System.out.println("发送状态行："+line);
     }
     private void sendHeaders() throws IOException {
         //3.2发送响应头
         String line;
         line = "Content-Type: text/html";
         println(line);
+        System.out.println("发送响应头："+line);
 
         line = "Content-Length: "+contentFile.length();
         println(line);

@@ -1,5 +1,6 @@
 package com.webserver.core;
 
+import com.webserver.http.HttpServletPesponse;
 import com.webserver.http.HttpServletRequst;
 
 import java.io.*;
@@ -22,7 +23,7 @@ public class ClientHandler implements Runnable{
         try {
             //解析请求
             HttpServletRequst requst = new HttpServletRequst(socket);
-
+            HttpServletPesponse response = new HttpServletPesponse(socket);
             //处理请求
             String path = requst.getUri();
 
@@ -54,13 +55,16 @@ public class ClientHandler implements Runnable{
 
             //3.1发送状态行
             File file = new File(staticDir,path);
-            String line;//状态行
+
             if(file.isFile()){//实际存在的文件
-                line = "HTTP/1.1 200 OK";
+                response.setContentFile(file);
             }else{//1:文件不存在  2:是一个目录
-                line = "HTTP/1.1 404 NotFound";
+                response.setStatusCode(404);
+                response.setStatusReason("NotFound");
                 file = new File(staticDir,"/root/404.html");
+                response.setContentFile(file);
             }
+            response.Response();
 
 
         } catch (IOException | URISyntaxException e) {
