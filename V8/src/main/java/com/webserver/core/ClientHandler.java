@@ -61,25 +61,7 @@ public class ClientHandler implements Runnable{
                 line = "HTTP/1.1 404 NotFound";
                 file = new File(staticDir,"/root/404.html");
             }
-            println(line);
-            //3.2发送响应头
-            line = "Content-Type: text/html";
-            println(line);
 
-            line = "Content-Length: "+file.length();
-            println(line);
-            //单独发送回车+换行表示响应头部分发送完毕
-            println("");
-
-            //3.3发送响应正文
-            OutputStream out = socket.getOutputStream();
-            byte[] buf = new byte[1024*10];
-            int len;
-            FileInputStream fis = new FileInputStream(file);
-            while((len = fis.read(buf))!=-1){
-                out.write(buf,0,len);
-            }
-            System.out.println("响应发送完毕");
 
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
@@ -91,11 +73,5 @@ public class ClientHandler implements Runnable{
             }
         }
     }
-    private void println(String line) throws IOException {
-        OutputStream out = socket.getOutputStream();
-        byte[] data = line.getBytes(StandardCharsets.ISO_8859_1);
-        out.write(data);
-        out.write(13);//发送回车符
-        out.write(10);//发送换行符
-    }
+
 }
