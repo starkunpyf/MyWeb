@@ -5,11 +5,15 @@ import com.webserver.http.HttpServletRequst;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class DispatcherServlet {
     private static File staticDir;
 
     static{
+        
         try {
             staticDir = new File(
                     ClientHandler.class.getClassLoader().getResource(
@@ -50,11 +54,35 @@ public class DispatcherServlet {
 
         if(file.isFile()){//实际存在的文件
             response.setContentFile(file);
+            /*
+                实现根据资源的后缀名设置正确的Content-Type的值(参阅http.txt文件最下面)
+                思路:
+                1:首先根据file获取其表示的文件名
+                2:根据文件名截取出后缀名
+                3:根据后缀设置Content-Type的值
+             */
+            Map<String,String> mimeMapping = new HashMap<>();
+            mimeMapping.put("html","text/html");
+            mimeMapping.put("css","text/css");
+            mimeMapping.put("js","application/javascript");
+            mimeMapping.put("gif","image/gif");
+            mimeMapping.put("jpg","image/jpeg");
+            mimeMapping.put("png","image/png");
+            //获取文件的后缀名   image.png
+            String fileName = file.getName();
+            String ext = fileName.substring(fileName.lastIndexOf(".")+1);
+            //根据后缀名提取对应的mime类型
+            String mime = mimeMapping.get(ext);
+
+            response.addHeader("Content-Type","text/html");
+            response.addHeader("Content-Length",String.valueOf(file.length()));
         }else{//1:文件不存在  2:是一个目录
             response.setStatusCode(404);
             response.setStatusReason("NotFound");
             file = new File(staticDir,"/root/404.html");
             response.setContentFile(file);
+            response.addHeader("Content-Type","text/html");
+            response.addHeader("Content-Length",String.valueOf(file.length()));
         }
     }
 }
