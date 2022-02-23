@@ -51,11 +51,24 @@ public class UserController {
         String ageStr = request.getParameter("age");
         System.out.println(username+","+password+","+nickname+","+ageStr);
 
+        if(username==null||password==null||nickname==null||ageStr==null
+        ||!ageStr.matches("[0-9]+")){
+            File file = new File(staticDir,"myweb/reg_fail.html");
+            response.setContentFile(file);
+            return;
+        }
+
         //2将用户信息以一个User实例形式表示，并序列化到文件中
         int age = Integer.parseInt(ageStr);
         User user = new User(username,password,nickname,age);
         //将该用户信息以用户名.obj的形式保存到users目录中
         File userFile = new File(USER_DIR,username+".obj");
+
+        if(userFile.exists()){
+            File file = new File(staticDir,"/myweb/have_user.html");
+            response.setContentFile(file);
+            return;
+        }
         try(
                 FileOutputStream fos = new FileOutputStream(userFile);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);

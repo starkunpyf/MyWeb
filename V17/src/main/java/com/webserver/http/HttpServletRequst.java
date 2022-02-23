@@ -42,10 +42,11 @@ public class HttpServletRequst {
         method = strings[0];
         uri = strings[1];
         protocol = strings[2];
-        parseUri();
+
         System.out.println("method: " + method );
         System.out.println("uri: " + uri );
         System.out.println("protocol: " + protocol );
+        parseUri();
     }
 
     private void parseUri(){
@@ -56,7 +57,7 @@ public class HttpServletRequst {
             data = queryString.split("&");
             for(String para : data){
                 String[] paras = para.split("=");
-                parameters.put(paras[0],paras[1].length()>1?paras[1]:null);
+                parameters.put(paras[0],paras.length>1?paras[1]:null);
             }
         }
         System.out.println("requestURI:"+requestURI);
