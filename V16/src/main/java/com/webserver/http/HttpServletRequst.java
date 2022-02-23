@@ -57,6 +57,10 @@ public class HttpServletRequst {
                 parameters.put(paras[0],paras[1].length()>1?paras[1]:null);
             }
         }
+        System.out.println("requestURI:"+requestURI);
+        System.out.println("queryString:"+queryString);
+        System.out.println("parameters:"+parameters);
+
     }
 
     private void parseHeaders() throws IOException {
