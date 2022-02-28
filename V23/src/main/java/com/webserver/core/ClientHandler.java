@@ -2,15 +2,11 @@ package com.webserver.core;
 
 import com.webserver.http.EmptyRequestException;
 import com.webserver.http.HttpServletPesponse;
-import com.webserver.http.HttpServletRequst;
+import com.webserver.http.HttpServletRequest;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class ClientHandler implements Runnable{
     private Socket socket;
@@ -23,11 +19,11 @@ public class ClientHandler implements Runnable{
     public void run() {
         try {
             //解析请求
-            HttpServletRequst requst = new HttpServletRequst(socket);
+            HttpServletRequest request = new HttpServletRequest(socket);
             HttpServletPesponse response = new HttpServletPesponse(socket);
             //处理请求
             DispatcherServlet servlet = new DispatcherServlet();
-            servlet.service(requst,response);
+            servlet.service(request,response);
             //发送响应
             response.Response();
 
@@ -36,6 +32,8 @@ public class ClientHandler implements Runnable{
             e.printStackTrace();
         } catch (EmptyRequestException e) {
 
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         } finally{
             try {
                 socket.close();

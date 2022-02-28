@@ -12,7 +12,7 @@ import java.util.Set;
 import static com.webserver.http.HttpContext.CR;
 import static com.webserver.http.HttpContext.LF;
 
-public class HttpServletRequst {
+public class HttpServletRequest {
     private Socket socket;
     private String method;
     private String uri;
@@ -23,7 +23,7 @@ public class HttpServletRequst {
     private Map<String, String> parameters = new HashMap();
 
 
-    public HttpServletRequst(Socket socket) throws IOException,EmptyRequestException{
+    public HttpServletRequest(Socket socket) throws IOException,EmptyRequestException{
         this.socket = socket;
         //解析请求行
         parseRequstLine();

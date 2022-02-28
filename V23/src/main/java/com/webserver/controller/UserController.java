@@ -4,7 +4,7 @@ import com.webserver.annotation.Controller;
 import com.webserver.annotation.RequestMapping;
 import com.webserver.core.ClientHandler;
 import com.webserver.entity.User;
-import com.webserver.http.HttpServletRequst;
+import com.webserver.http.HttpServletRequest;
 import com.webserver.http.HttpServletPesponse;
 
 import java.io.*;
@@ -45,7 +45,7 @@ public class UserController {
      * @param response
      */
     @RequestMapping("/myweb/reg")
-    public void reg(HttpServletRequst request,HttpServletPesponse response){
+    public void reg(HttpServletRequest request, HttpServletPesponse response){
         System.out.println("开始处理用户注册...");
         //1获取用户表单提交上来的数据
         String username = request.getParameter("username");
@@ -95,7 +95,7 @@ public class UserController {
      * @param response
      */
     @RequestMapping("/myweb/login")
-    public void login(HttpServletRequst request, HttpServletPesponse response){
+    public void login(HttpServletRequest request, HttpServletPesponse response){
         System.out.println("开始处理登录...");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -138,7 +138,7 @@ public class UserController {
      * @param response
      */
     @RequestMapping("/myweb/showAllUser")
-    public void showAllUser(HttpServletRequst request, HttpServletPesponse response){
+    public void showAllUser(HttpServletRequest request, HttpServletPesponse response){
         System.out.println("开始生成动态页面");
 
         //1将users目录下的所有obj文件进行反序列化，并将得到的所有User对象存入一个List集合备用
