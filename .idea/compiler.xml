@@ -30,6 +30,7 @@
         <module name="V12" />
         <module name="V11" />
         <module name="V10" />
+        <module name="V25" />
       </profile>
     </annotationProcessing>
   </component>
